@@ -40,7 +40,7 @@ Website Deployed
 
 - Netlify
 
-# yarn add
+# yarn
 
 ## Functionalities
 
