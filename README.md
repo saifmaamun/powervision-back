@@ -5,6 +5,7 @@ Live Link: https://redux-watch-shop-live.vercel.app/
 Server Link: https://redux-watch-shop.vercel.app/
 
 Front End Git Link: https://github.com/saifmaamun/redux-frontend
+
 back End Git Link: https://github.com/saifmaamun/redux-backend
 
 Used Technologies:
