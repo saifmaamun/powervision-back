@@ -42,6 +42,8 @@ Website Deployed
 
 # yarn
 
+# yarn start
+
 ## Functionalities
 
 - Custom Login Signin

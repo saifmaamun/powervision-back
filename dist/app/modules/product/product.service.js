@@ -22,7 +22,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const product_model_1 = require("./product.model");
-const paginationHelpers_1 = require("../../../helper/paginationHelpers");
+// import { paginationHelpers } from "../../../helper/paginationHelpers";
 // add new product
 const addProductToDBS = (product) => __awaiter(void 0, void 0, void 0, function* () {
     const addedProduct = yield product_model_1.Product.create(product);
@@ -32,40 +32,45 @@ const addProductToDBS = (product) => __awaiter(void 0, void 0, void 0, function*
     return addedProduct;
 });
 // get all products
-const getAllProductsFromDBS = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
-    const filtersData = __rest(filters, []);
-    const { page, limit, skip, sortBy, sortOrder } = paginationHelpers_1.paginationHelpers.calculatePagination(paginationOptions);
-    const andConditions = [];
-    if (Object.keys(filtersData).length) {
-        andConditions.push({
-            $and: Object.entries(filtersData).map(([field, value]) => ({
-                [field]: value,
-            })),
-        });
-    }
-    const sortConditions = {};
-    if (sortBy && sortOrder) {
-        sortConditions[sortBy] = sortOrder;
-    }
-    const whereConditions = andConditions.length > 0 ? { $and: andConditions } : {};
-    const result = yield product_model_1.Product.find(whereConditions)
-        .sort(sortConditions)
-        .skip(skip)
-        .limit(limit);
-    const total = yield product_model_1.Product.countDocuments(whereConditions);
-    return {
-        meta: {
-            page,
-            limit,
-            total,
-        },
-        data: result,
-    };
-});
-// const getAllProductsFromDBS = async (): Promise<IProduct[]> => {
-//   const products = await Product.find();
-//   return products;
+// const getAllProductsFromDBS = async (
+//   filters: IProductFilters,
+//   paginationOptions: IPaginationOptions
+// ): Promise<IGenericResponse<IProduct[]>> => {
+//   const { ...filtersData } = filters;
+//   const { page, limit, skip, sortBy, sortOrder } =
+//     paginationHelpers.calculatePagination(paginationOptions);
+//   const andConditions = [];
+//   if (Object.keys(filtersData).length) {
+//     andConditions.push({
+//       $and: Object.entries(filtersData).map(([field, value]) => ({
+//         [field]: value,
+//       })),
+//     });
+//   }
+//   const sortConditions: { [key: string]: SortOrder } = {};
+//   if (sortBy && sortOrder) {
+//     sortConditions[sortBy] = sortOrder;
+//   }
+//   const whereConditions =
+//     andConditions.length > 0 ? { $and: andConditions } : {};
+//   const result = await Product.find(whereConditions)
+//     .sort(sortConditions)
+//     .skip(skip)
+//     .limit(limit);
+//   const total = await Product.countDocuments(whereConditions);
+//   return {
+//     meta: {
+//       page,
+//       limit,
+//       total,
+//     },
+//     data: result,
+//   };
 // };
+const getAllProductsFromDBS = () => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield product_model_1.Product.find();
+    return products;
+});
 // get single product bu ID
 const getSingleProductByIdFromDBS = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const query = { _id: id };

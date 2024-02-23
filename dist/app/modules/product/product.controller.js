@@ -16,8 +16,6 @@ exports.ProductController = void 0;
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const product_service_1 = require("./product.service");
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
-const product_interface_1 = require("./product.interface");
-const pick_1 = __importDefault(require("../../../shared/pick"));
 const addProductToDBC = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = req.body;
     const result = yield product_service_1.ProductService.addProductToDBS(product);
@@ -28,28 +26,31 @@ const addProductToDBC = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         data: result,
     });
 }));
-// const getProductsFromDBC = catchAsync(async (req: Request, res: Response) => {
-//   const result = await ProductService.getAllProductsFromDBS();
-//   sendResponse<IProduct[]>(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: "All Product received",
-//     data: result,
-//   });
-// });
 const getProductsFromDBC = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const filters = (0, pick_1.default)(req.query, product_interface_1.productFilterableFields);
-    console.log(filters);
-    const paginationOptions = (0, pick_1.default)(req.query, product_interface_1.paginationFields);
-    const result = yield product_service_1.ProductService.getAllProductsFromDBS(filters, paginationOptions);
+    const result = yield product_service_1.ProductService.getAllProductsFromDBS();
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
         message: "All Product received",
-        meta: result.meta,
-        data: result.data,
+        data: result,
     });
 }));
+// const getProductsFromDBC = catchAsync(async (req: Request, res: Response) => {
+//   const filters = pick(req.query, productFilterableFields);
+//   console.log(req.query, filters);
+//   const paginationOptions = pick(req.query, paginationFields);
+//   const result = await ProductService.getAllProductsFromDBS(
+//     filters,
+//     paginationOptions
+//   );
+//   sendResponse<IProduct[]>(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "All Product received",
+//     meta: result.meta,
+//     data: result.data,
+//   });
+// });
 const getSingleProductByIdFromDBC = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const result = yield product_service_1.ProductService.getSingleProductByIdFromDBS(id);

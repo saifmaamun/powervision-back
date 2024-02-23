@@ -1,18 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.paginationFields = exports.productFilterableFields = void 0;
-// filterable fields
-exports.productFilterableFields = [
-    "material",
-    "shape",
-    "lens",
-    "brand",
-    "price",
-    "gender",
-    "lenseColor",
-    "frameColor",
-];
-exports.paginationFields = ["page", "limit", "sortBy", "sortOrder"];
+// // filtering options
+// export type IProductFilters = {
+//   searchTerm?: string;
+//   material?: string;
+//   shape?: string;
+//   lens?: string;
+//   brand?: string;
+//   price?: number;
+//   gender?: string;
+//   lenseColor?: string;
+//   frameColor?: string;
+// };
+// // filterable fields
+// export const productFilterableFields = [
+//   "material",
+//   "shape",
+//   "lens",
+//   "brand",
+//   "price",
+//   "gender",
+//   "lenseColor",
+//   "frameColor",
+// ];
+// export const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
 // Filter by Frame Material: Allow users to set a filter for specific frame materials (e.g., metal, plastic, acetate).
 // Filter by Frame Shape: Implement a real-time search functionality for frame shapes to quickly find eyeglasses with specific shapes (e.g., rectangular, round, cat-eye).
 // Filter by Lens Type: Enable searching by lens types (e.g., single-vision, bifocal, progressive).

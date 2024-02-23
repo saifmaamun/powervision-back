@@ -1,13 +1,9 @@
 import { error } from "console";
-import { IProduct, IProductFilters } from "./product.interface";
+import { IProduct } from "./product.interface";
 import { Product } from "./product.model";
-import { IPaginationOptions } from "../../interfaces/pagination";
-import {
-  IGenericErrorResponse,
-  IGenericResponse,
-} from "../../interfaces/common";
+
 import { SortOrder } from "mongoose";
-import { paginationHelpers } from "../../../helper/paginationHelpers";
+// import { paginationHelpers } from "../../../helper/paginationHelpers";
 
 // add new product
 const addProductToDBS = async (product: IProduct): Promise<IProduct> => {
@@ -19,50 +15,49 @@ const addProductToDBS = async (product: IProduct): Promise<IProduct> => {
 };
 
 // get all products
-const getAllProductsFromDBS = async (
-  filters: IProductFilters,
-  paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IProduct[]>> => {
-  const { ...filtersData } = filters;
-  const { page, limit, skip, sortBy, sortOrder } =
-    paginationHelpers.calculatePagination(paginationOptions);
-  const andConditions = [];
+// const getAllProductsFromDBS = async (
+//   filters: IProductFilters,
+//   paginationOptions: IPaginationOptions
+// ): Promise<IGenericResponse<IProduct[]>> => {
+//   const { ...filtersData } = filters;
+//   const { page, limit, skip, sortBy, sortOrder } =
+//     paginationHelpers.calculatePagination(paginationOptions);
+//   const andConditions = [];
 
-  if (Object.keys(filtersData).length) {
-    andConditions.push({
-      $and: Object.entries(filtersData).map(([field, value]) => ({
-        [field]: value,
-      })),
-    });
-  }
+//   if (Object.keys(filtersData).length) {
+//     andConditions.push({
+//       $and: Object.entries(filtersData).map(([field, value]) => ({
+//         [field]: value,
+//       })),
+//     });
+//   }
 
-  const sortConditions: { [key: string]: SortOrder } = {};
+//   const sortConditions: { [key: string]: SortOrder } = {};
 
-  if (sortBy && sortOrder) {
-    sortConditions[sortBy] = sortOrder;
-  }
-  const whereConditions =
-    andConditions.length > 0 ? { $and: andConditions } : {};
+//   if (sortBy && sortOrder) {
+//     sortConditions[sortBy] = sortOrder;
+//   }
+//   const whereConditions =
+//     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Product.find(whereConditions)
-    .sort(sortConditions)
-    .skip(skip)
-    .limit(limit);
-  const total = await Product.countDocuments(whereConditions);
-  return {
-    meta: {
-      page,
-      limit,
-      total,
-    },
-    data: result,
-  };
-};
-// const getAllProductsFromDBS = async (): Promise<IProduct[]> => {
-
-//   const products = await Product.find();
-//   return products;
+//   const result = await Product.find(whereConditions)
+//     .sort(sortConditions)
+//     .skip(skip)
+//     .limit(limit);
+//   const total = await Product.countDocuments(whereConditions);
+//   return {
+//     meta: {
+//       page,
+//       limit,
+//       total,
+//     },
+//     data: result,
+//   };
 // };
+const getAllProductsFromDBS = async (): Promise<IProduct[]> => {
+  const products = await Product.find();
+  return products;
+};
 // get single product bu ID
 const getSingleProductByIdFromDBS = async (
   id: string
